@@ -1,12 +1,20 @@
 import { ReactNode, useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Link, useLocation } from '../router/Router';
+import { Shield, FileText, AlertTriangle, Heart } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/',            labelEs: 'Inicio',               labelEn: 'Home' },
   { href: '/converter',   labelEs: 'Conversor de Divisas', labelEn: 'Converter' },
   { href: '/calculators', labelEs: 'Calculadoras',         labelEn: 'Calculators' },
   { href: '/news',        labelEs: 'Noticias Financieras', labelEn: 'Financial News' },
+];
+
+// Layout.tsx - actualizar LEGAL_LINKS
+const LEGAL_LINKS = [
+  { href: '/legal/privacy',    labelEs: 'Privacidad',    labelEn: 'Privacy',    icon: Shield },
+  { href: '/legal/terms',      labelEs: 'Términos',      labelEn: 'Terms',      icon: FileText },
+  { href: '/legal/disclaimer', labelEs: 'Aviso Legal',   labelEn: 'Disclaimer', icon: AlertTriangle },
 ];
 
 interface LayoutProps { children: ReactNode; }
@@ -112,11 +120,13 @@ export function Layout({ children }: LayoutProps) {
             <span className="logo-icon">◈</span>
             <span className="logo-text">Zen<span className="logo-accent">tic</span></span>
           </div>
+          
           <p className="footer-tagline">
             {language === 'es'
-              ? 'Herramientas financieras profesionales · Gratis · Sin registro'
-              : 'Professional financial tools · Free · No sign-up'}
+              ? 'Herramientas financieras  · Gratis · Sin registro'
+              : 'Financial tools · Free · No sign-up'}
           </p>
+          
           <nav className="footer-links">
             {NAV_LINKS.slice(1).map(link => (
               <Link key={link.href} to={link.href} className="footer-link">
@@ -124,7 +134,32 @@ export function Layout({ children }: LayoutProps) {
               </Link>
             ))}
           </nav>
-          <p className="footer-copy">© {new Date().getFullYear()} Zentic · Professional Financial Tools</p>
+
+          {/* ENLACES LEGALES - NUEVA SECCIÓN */}
+          <div className="footer-legal">
+            {LEGAL_LINKS.map(link => {
+              const Icon = link.icon;
+              return (
+                <Link 
+                  key={link.href} 
+                  to={link.href} 
+                  className="footer-legal-link"
+                >
+                  <Icon className="footer-legal-icon" />
+                  <span>{language === 'es' ? link.labelEs : link.labelEn}</span>
+                </Link>
+              );
+            })}
+          </div>
+          
+          <p className="footer-copy">
+            © {new Date().getFullYear()} Zentic · Professional Financial Tools
+          </p>
+          
+          <p className="footer-heart">
+            <Heart className="footer-heart-icon" /> 
+            {language === 'es' ? 'Hecho con transparencia' : 'Made with transparency'}
+          </p>
         </div>
       </footer>
 
@@ -220,7 +255,7 @@ export function Layout({ children }: LayoutProps) {
         .lang-flag { font-size: 15px; line-height: 1; }
         .lang-code { letter-spacing: .05em; }
 
-        /* Hamburger — sin z-index, dentro del flujo normal del nav */
+        /* Hamburger */
         .hamburger {
           display: flex; flex-direction: column; justify-content: center;
           gap: 5px; width: 40px; height: 40px; padding: 8px;
@@ -291,6 +326,7 @@ export function Layout({ children }: LayoutProps) {
           background: rgba(255,255,255,.02);
           border-top: 1px solid rgba(255,255,255,.06);
           padding: 32px 16px;
+          margin-top: auto;
         }
         @media (min-width: 640px) { .footer { padding: 40px 24px; } }
         .footer-inner {
@@ -309,8 +345,44 @@ export function Layout({ children }: LayoutProps) {
         }
         @media (min-width: 640px) { .footer-link { font-size: 13px; } }
         .footer-link:hover { color: #00ff87; }
-        .footer-copy { font-size: 11px; color: #1e293b; }
+
+        /* Enlaces legales - NUEVOS ESTILOS */
+        .footer-legal {
+          display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+          padding: 8px 0 4px;
+          border-top: 1px solid rgba(255,255,255,.04);
+          margin-top: 4px;
+        }
+        .footer-legal-link {
+          display: flex; align-items: center; gap: 5px;
+          font-size: 11px; font-weight: 500; color: #334155;
+          text-decoration: none; transition: color .2s;
+        }
+        @media (min-width: 640px) { 
+          .footer-legal-link { font-size: 12px; gap: 6px; }
+        }
+        .footer-legal-link:hover { color: #00ff87; }
+        .footer-legal-icon {
+          width: 12px; height: 12px; opacity: 0.7;
+        }
+        @media (min-width: 640px) {
+          .footer-legal-icon { width: 13px; height: 13px; }
+        }
+
+        .footer-copy { font-size: 11px; color: #1e293b; margin-top: 4px; }
         @media (min-width: 640px) { .footer-copy { font-size: 12px; } }
+        
+        .footer-heart {
+          display: flex; align-items: center; justify-content: center; gap: 5px;
+          font-size: 10px; color: #1e293b; margin-top: 4px;
+        }
+        .footer-heart-icon {
+          width: 10px; height: 10px; color: #ef4444; opacity: 0.6;
+        }
+        @media (min-width: 640px) {
+          .footer-heart { font-size: 11px; }
+          .footer-heart-icon { width: 11px; height: 11px; }
+        }
       `}</style>
     </div>
   );

@@ -21,8 +21,8 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.news': 'Noticias Financieras',
     
     // Footer
-    'footer.tagline': 'Herramientas financieras profesionales · Gratis · Sin registro',
-    'footer.copyright': 'Professional Financial Tools',
+    'footer.tagline': 'Herramientas financieras · Gratis · Sin registro',
+    'footer.copyright': 'Financial Tools',
     
     // Home
     'home.hero.eyebrow': 'Herramientas Financieras',
