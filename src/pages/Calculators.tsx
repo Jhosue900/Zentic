@@ -296,7 +296,7 @@ const useFormattedInput = (initialValue: string, isDecimal: boolean = false) => 
 export function Calculators() {
   const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'tax' | 'salary' | 'compound' | 'loan' | 'debt' | 'savings'>('compound');
-  const [globalCurrency, setGlobalCurrency] = useState<Currency>('USD');
+  const [globalCurrency, setGlobalCurrency] = useState<Currency>('COP');
   const meta = CURRENCY_MAP[globalCurrency];
   
   // Obtener SEO dinámico según el idioma actual
@@ -495,7 +495,7 @@ function FaqSection({ activeTab, language }: { activeTab: string; language: 'es'
 function TaxCalculator() {
   const { symbol, currency, setCurrency } = useCurrency();
   const { language } = useLanguage();
-  const [country, setCountry] = useState<VatCountry>('chile');
+  const [country, setCountry] = useState<VatCountry>('colombia');
   const { value: amountValue, rawValue: amount, handleChange: setAmount } = useFormattedInput('0', false);
   const [operation, setOperation] = useState<TaxOperation>('add');
   const [result, setResult] = useState<TaxCalculation | null>(null);
