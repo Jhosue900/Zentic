@@ -1,0 +1,11 @@
+# Robots.txt para Zentic Financial Tools
+User-agent: *
+Allow: /
+
+# Evitar que se indexen archivos de configuración si los hubiera
+Disallow: /node_modules/
+Disallow: /build/
+Disallow: /dist/
+
+# Enlace al Sitemap para que Google encuentre tus 10 noticias
+Sitemap: https://zentic-iota.vercel.app/sitemap.xml
