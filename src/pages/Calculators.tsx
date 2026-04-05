@@ -3,7 +3,7 @@ import { Calculator, DollarSign, TrendingUp, Home, CreditCard, Target } from 'lu
 import { useLanguage } from '../context/LanguageContext';
 import { TaxCalculation } from '../types';
 import { SEO } from '../components/SEO';
-import { CURRENCY_MAP } from '../data/Currencies';
+import { CURRENCY_MAP } from '../data/CurrenciesFile';
 import { Currency } from '../types/index';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,

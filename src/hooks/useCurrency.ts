@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Currency, ExchangeRate } from '../types';
-import { CURRENCIES, CURRENCY_MAP } from '../data/Currencies.ts';
+import { CURRENCIES, CURRENCY_MAP } from '../data/CurrenciesFile.ts';
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const API_BASE_URL        = 'https://open.er-api.com/v6/latest';

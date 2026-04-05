@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowLeftRight, TrendingUp, RefreshCw, AlertTriangle } from 'lucide-react';
 import { Currency } from '../types';
 import { useCurrency, formatAmount, formatRate } from '../hooks/useCurrency';
-import { CURRENCY_MAP } from '../data/Currencies.ts';
+import { CURRENCY_MAP } from '../data/CurrenciesFile.ts';
 import { useLanguage } from '../context/LanguageContext';
 import { SEO } from '../components/SEO';
 
