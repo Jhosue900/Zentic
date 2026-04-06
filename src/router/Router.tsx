@@ -1,4 +1,14 @@
-import React, { useState, useEffect, ReactNode, useContext, createContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+  useContext,
+  createContext,
+  Component,
+} from 'react';
+
+// ─── Tipos ────────────────────────────────────────────────────────────────────
 
 type Route = {
   path: string;
@@ -9,63 +19,133 @@ interface RouterProps {
   routes: Route[];
 }
 
-// Función para verificar si una ruta coincide con el path actual (soporta parámetros :id)
-const matchRoute = (routePath: string, currentPath: string): { matches: boolean; params: Record<string, string> } => {
+// ─── matchRoute ───────────────────────────────────────────────────────────────
+
+const matchRoute = (
+  routePath: string,
+  currentPath: string
+): { matches: boolean; params: Record<string, string> } => {
   const routeParts = routePath.split('/');
   const currentParts = currentPath.split('/');
-  
+
   if (routeParts.length !== currentParts.length) {
     return { matches: false, params: {} };
   }
-  
+
   const params: Record<string, string> = {};
-  
+
   for (let i = 0; i < routeParts.length; i++) {
     if (routeParts[i].startsWith(':')) {
-      // Es un parámetro dinámico, guardar el valor
-      const paramName = routeParts[i].slice(1);
-      params[paramName] = currentParts[i];
+      params[routeParts[i].slice(1)] = currentParts[i];
     } else if (routeParts[i] !== currentParts[i]) {
-      // No coincide
       return { matches: false, params: {} };
     }
   }
-  
+
   return { matches: true, params };
 };
 
-// Contexto para pasar los parámetros de la ruta a los componentes hijos
+// ─── Contexto de parámetros ───────────────────────────────────────────────────
+
 const RouterParamsContext = createContext<Record<string, string>>({});
 
-export const RouterParamsProvider = ({ params, children }: { params: Record<string, string>; children: ReactNode }) => {
-  return (
-    <RouterParamsContext.Provider value={params}>
-      {children}
-    </RouterParamsContext.Provider>
-  );
-};
+export const RouterParamsProvider = ({
+  params,
+  children,
+}: {
+  params: Record<string, string>;
+  children: ReactNode;
+}) => (
+  <RouterParamsContext.Provider value={params}>
+    {children}
+  </RouterParamsContext.Provider>
+);
 
-// Hook para obtener los parámetros de la ruta
 export function useParams(): Record<string, string> {
   return useContext(RouterParamsContext);
 }
 
+// ─── Error Boundary ───────────────────────────────────────────────────────────
+
+interface ErrorBoundaryProps {
+  routeKey: string;
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+  prevRouteKey: string;
+}
+
+class RouteErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null,
+      prevRouteKey: props.routeKey,
+    };
+  }
+
+  // Resetear el error automáticamente al cambiar de ruta
+  static getDerivedStateFromProps(
+    props: ErrorBoundaryProps,
+    state: ErrorBoundaryState
+  ): Partial<ErrorBoundaryState> | null {
+    if (props.routeKey !== state.prevRouteKey) {
+      return {
+        hasError: false,
+        error: null,
+        prevRouteKey: props.routeKey,
+      };
+    }
+    return null;
+  }
+
+  static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
+    return { hasError: true, error };
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <h2>Algo salió mal en esta página.</h2>
+          <pre style={{ color: 'red', fontSize: '0.85rem' }}>
+            {this.state.error?.message}
+          </pre>
+          <button onClick={() => this.setState({ hasError: false, error: null })}>
+            Reintentar
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// ─── Router ───────────────────────────────────────────────────────────────────
+
 export function Router({ routes }: RouterProps) {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const currentPathRef = useRef(currentPath);
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname);
+      const newPath = window.location.pathname;
+      currentPathRef.current = newPath;
+      setCurrentPath(newPath);
+      window.scrollTo(0, 0);
     };
 
     window.addEventListener('popstate', onLocationChange);
     return () => window.removeEventListener('popstate', onLocationChange);
   }, []);
 
-  // Buscar la ruta que coincida (incluyendo rutas dinámicas)
   let matchedRoute: Route | undefined;
   let matchedParams: Record<string, string> = {};
-  
+
   for (const route of routes) {
     const { matches, params } = matchRoute(route.path, currentPath);
     if (matches) {
@@ -74,29 +154,38 @@ export function Router({ routes }: RouterProps) {
       break;
     }
   }
-  
-  // Si no hay coincidencia, usar la primera ruta (home)
-  const currentRoute = matchedRoute || routes[0];
-  
-  // Pasar los parámetros al componente mediante props adicionales
-  const componentWithParams = matchedParams && Object.keys(matchedParams).length > 0
-    ? <RouterParamsProvider params={matchedParams}>{currentRoute.component}</RouterParamsProvider>
-    : currentRoute.component;
 
-  return <>{componentWithParams}</>;
+  const currentRoute = matchedRoute ?? routes[0];
+
+  const componentWithParams =
+    Object.keys(matchedParams).length > 0 ? (
+      <RouterParamsProvider params={matchedParams}>
+        {currentRoute.component}
+      </RouterParamsProvider>
+    ) : (
+      currentRoute.component
+    );
+
+  return (
+    <main key={currentPath}>
+      <RouteErrorBoundary routeKey={currentPath}>
+        {componentWithParams}
+      </RouteErrorBoundary>
+    </main>
+  );
 }
+
+// ─── Navegación ───────────────────────────────────────────────────────────────
 
 export function navigate(path: string) {
   window.history.pushState({}, '', path);
   window.dispatchEvent(new PopStateEvent('popstate'));
 }
 
-// Hook para navegación programática
 export function useNavigate() {
   return navigate;
 }
 
-// Hook para leer la ruta actual reactivamente
 export function useLocation() {
   const [pathname, setPathname] = useState(window.location.pathname);
 
@@ -109,6 +198,8 @@ export function useLocation() {
   return { pathname };
 }
 
+// ─── Link ─────────────────────────────────────────────────────────────────────
+
 interface LinkProps {
   to: string;
   children: ReactNode;
@@ -120,7 +211,7 @@ interface LinkProps {
 export function Link({ to, children, className, style, onClick }: LinkProps) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (onClick) onClick();
+    onClick?.();
     navigate(to);
   };
 
