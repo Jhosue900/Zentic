@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'es' | 'en';
@@ -11,20 +10,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Traducciones completas para toda la aplicación
 const translations: Record<Language, Record<string, string>> = {
   es: {
-    // Navbar
     'nav.home': 'Inicio',
     'nav.converter': 'Conversor de Divisas',
     'nav.calculators': 'Calculadoras',
     'nav.news': 'Noticias Financieras',
-    
-    // Footer
     'footer.tagline': 'Herramientas financieras · Gratis · Sin registro',
     'footer.copyright': 'Financial Tools',
-    
-    // Home
     'home.hero.eyebrow': 'Herramientas Financieras',
     'home.hero.title': 'Decisiones inteligentes, datos en tiempo real',
     'home.hero.subtitle': 'Convierte divisas, calcula impuestos y sigue el mercado — todo gratis, sin registro.',
@@ -47,8 +40,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.trust.nosignup': 'Sin registro',
     'home.trust.currencies': '15 divisas',
     'home.trust.free': '100% gratis',
-    
-    // Converter
     'converter.title': 'Conversor de Divisas',
     'converter.subtitle': 'Tipos de cambio actualizados en tiempo real',
     'converter.amount': 'Cantidad',
@@ -56,8 +47,6 @@ const translations: Record<Language, Record<string, string>> = {
     'converter.to': 'A',
     'converter.result': 'Resultado',
     'converter.exchangeRates': 'Tipos de Cambio',
-    
-    // Calculators
     'calculators.title': 'Calculadoras Financieras',
     'calculators.taxCalc': 'IVA',
     'calculators.salary': 'Salario Neto',
@@ -86,24 +75,17 @@ const translations: Record<Language, Record<string, string>> = {
     'calculators.interest': 'Intereses Generados',
     'calculators.year': 'Año',
     'calculators.total': 'Total',
-    
-    // News
     'news.title': 'Noticias Financieras',
     'news.subtitle': 'Mantente informado con las últimas noticias del mercado global',
     'news.readMore': 'Leer más',
   },
   en: {
-    // Navbar
     'nav.home': 'Home',
     'nav.converter': 'Currency Converter',
     'nav.calculators': 'Calculators',
     'nav.news': 'Financial News',
-    
-    // Footer
     'footer.tagline': 'Professional financial tools · Free · No sign-up',
     'footer.copyright': 'Professional Financial Tools',
-    
-    // Home
     'home.hero.eyebrow': 'Financial Tools',
     'home.hero.title': 'Smart decisions, real-time data',
     'home.hero.subtitle': 'Convert currencies, calculate taxes and follow the market — all free, no sign-up.',
@@ -126,8 +108,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.trust.nosignup': 'No sign-up',
     'home.trust.currencies': '15 currencies',
     'home.trust.free': '100% free',
-    
-    // Converter
     'converter.title': 'Currency Converter',
     'converter.subtitle': 'Real-time exchange rates',
     'converter.amount': 'Amount',
@@ -135,8 +115,6 @@ const translations: Record<Language, Record<string, string>> = {
     'converter.to': 'To',
     'converter.result': 'Result',
     'converter.exchangeRates': 'Exchange Rates',
-    
-    // Calculators
     'calculators.title': 'Financial Calculators',
     'calculators.taxCalc': 'VAT',
     'calculators.salary': 'Net Salary',
@@ -165,62 +143,51 @@ const translations: Record<Language, Record<string, string>> = {
     'calculators.interest': 'Interest Earned',
     'calculators.year': 'Year',
     'calculators.total': 'Total',
-    
-    // News
     'news.title': 'Financial News',
     'news.subtitle': 'Stay informed with the latest global market news',
     'news.readMore': 'Read more',
   },
 };
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Intentar recuperar el idioma guardado en localStorage
-  const getInitialLanguage = (): Language => {
-    const saved = localStorage.getItem('zentic-language') as Language;
+// ✅ Función pura fuera del componente — no depende de hooks ni estado
+function getInitialLanguage(): Language {
+  try {
+    const saved = localStorage.getItem('zentic-language');
     if (saved === 'es' || saved === 'en') return saved;
-    
-    // Detectar idioma del navegador
     const browserLang = navigator.language.split('-')[0];
-    if (browserLang === 'es') return 'es';
-    return 'en';
+    return browserLang === 'es' ? 'es' : 'en';
+  } catch {
+    // localStorage bloqueado (modo privado estricto, etc.)
+    return 'es';
+  }
+}
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
   };
 
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-
-  // Guardar el idioma en localStorage cuando cambie
   useEffect(() => {
-    localStorage.setItem('zentic-language', language);
-    
-    // Actualizar el atributo lang del HTML para SEO
+    try {
+      localStorage.setItem('zentic-language', language);
+    } catch { /* ignorar si localStorage no está disponible */ }
     document.documentElement.lang = language;
     document.documentElement.dir = 'ltr';
   }, [language]);
 
+  // ✅ t() aplanado — busca directamente en el objeto plano, sin recursión
+  //    Esto elimina cualquier posibilidad de que el split por '.' cause bugs
   const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
+    const dict = translations[language] ?? translations['es'];
+    const value = dict[key];
 
-    for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value?.[k];
-      } else {
-        value = undefined;
-        break;
-      }
-    }
+    if (value !== undefined) return value;
 
-    // Si no se encuentra la traducción, devolver la clave o buscar en inglés
-    if (value === undefined && language === 'es') {
-      // Fallback a inglés
-      let fallbackValue: any = translations.en;
-      for (const k of keys) {
-        fallbackValue = fallbackValue?.[k];
-        if (fallbackValue === undefined) break;
-      }
-      return fallbackValue || key;
-    }
-
-    return value || key;
+    // Fallback al otro idioma
+    const fallback = language === 'es' ? translations['en'][key] : translations['es'][key];
+    return fallback ?? key;
   };
 
   return (
