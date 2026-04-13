@@ -8,4 +8,4 @@ Disallow: /build/
 Disallow: /dist/
 
 # Enlace al Sitemap para que Google encuentre tus 10 noticias
-Sitemap: https://zentic-iota.vercel.app/sitemap.xml
+Sitemap: https://zenticc.online/sitemap.xml
