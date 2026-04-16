@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: '/converter',   labelEs: 'Conversor de Divisas', labelEn: 'Converter' },
   { href: '/calculators', labelEs: 'Calculadoras',         labelEn: 'Calculators' },
   { href: '/news',        labelEs: 'Noticias Financieras', labelEn: 'Financial News' },
+  { href: '/aboutus',     labelEs: 'Sobre Nosotros',     labelEn: 'About Us' },
 ];
 
 // Layout.tsx - actualizar LEGAL_LINKS
@@ -153,7 +154,7 @@ export function Layout({ children }: LayoutProps) {
           </div>
           
           <p className="footer-copy">
-            © {new Date().getFullYear()} Zentic · Professional Financial Tools
+            © {new Date().getFullYear()} Zentic · Financial Tools
           </p>
           
           <p className="footer-heart">

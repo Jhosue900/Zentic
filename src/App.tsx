@@ -15,6 +15,7 @@ import { CalculadoraInversion } from './pages/calc/CalculadoraInversion';
 import { CalculadoraPrestamo }  from './pages/calc/CalculadoraPrestamo';
 import { CalculadoraDeudas }    from './pages/calc/CalculadoraDeudas';
 import { CalculadoraAhorro }    from './pages/calc/CalculadoraAhorro';
+import { AboutUs } from './pages/AboutUs'
 
 // ✅ Fix 1: rutas FUERA del componente → se crean una sola vez,
 //    nunca causan re-renders ni remontan componentes innecesariamente
@@ -31,6 +32,7 @@ const routes = [
   { path: '/calculadora-de-prestamo',   component: <CalculadoraPrestamo /> },
   { path: '/calculadora-de-deudas',     component: <CalculadoraDeudas /> },
   { path: '/calculadora-de-ahorro',     component: <CalculadoraAhorro /> },
+  { path: '/aboutus',     component: <AboutUs /> },
 ];
 
 function App() {

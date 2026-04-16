@@ -21,28 +21,40 @@ import {
 
 const FAQ_AHORRO = [
   {
-    q_es: '¿Cuánto debo ahorrar al mes para mi meta?',
-    q_en: 'How much should I save per month to reach my goal?',
-    a_es: 'Depende de tu meta, el plazo y el rendimiento de tu ahorro. Ingresa estos datos en la calculadora y obtendrás el monto mensual exacto que necesitas ahorrar, considerando el interés compuesto.',
-    a_en: 'It depends on your goal, the time frame, and your savings return. Enter these data into the calculator and you will get the exact monthly amount you need to save, factoring in compound interest.',
+    q_es: '¿Cuánto debo ahorrar al mes para alcanzar mi meta financiera?',
+    q_en: 'How much should I save per month to reach my financial goal?',
+    a_es: 'Determinar el ahorro mensual ideal requiere un análisis de tres factores: el monto total de la meta, el horizonte de tiempo y la tasa de rendimiento esperada; bajo una estrategia de interés compuesto, tus aportaciones mensuales no solo se acumulan, sino que generan rendimientos que a su vez producen más ganancias, permitiéndote alcanzar objetivos ambiciosos con un esfuerzo menor si extiendes el plazo de ahorro, por lo que esta calculadora es la herramienta perfecta para ajustar tus variables y encontrar el equilibrio entre tu capacidad de pago actual y el tiempo que estás dispuesto a esperar para capitalizar tus sueños.',
+    a_en: 'Determining the ideal monthly savings requires an analysis of three factors: the total goal amount, the time horizon, and the expected rate of return; under a compound interest strategy, your monthly contributions not only accumulate but generate returns that in turn produce more earnings, allowing you to reach ambitious goals with less effort if you extend the savings term, making this calculator the perfect tool to adjust your variables and find the balance between your current payment capacity and the time you are willing to wait to capitalize on your dreams.',
   },
   {
-    q_es: '¿Cómo ahorrar para comprar una casa?',
-    q_en: 'How to save to buy a house?',
-    a_es: 'Define el monto del enganche (generalmente 10-20% del valor de la propiedad), establece un plazo realista y usa esta calculadora para saber cuánto ahorrar mensualmente. Considera un rendimiento del 4-6% si mantienes el dinero en un fondo de inversión.',
-    a_en: 'Define the down payment amount (usually 10-20% of the property value), set a realistic timeline, and use this calculator to find out how much to save monthly. Consider a 4-6% return if you keep the money in an investment fund.',
+    q_es: '¿Cómo puedo ahorrar efectivamente para comprar una casa?',
+    q_en: 'How can I effectively save to buy a house?',
+    a_es: 'El primer paso para adquirir una vivienda es asegurar el monto del enganche, que suele oscilar entre el 10% y el 20% del valor total de la propiedad, además de considerar un 5% adicional para gastos notariales y de escrituración; al planificar este ahorro, es vital separar el capital de tu cuenta corriente y colocarlo en instrumentos de bajo riesgo que ofrezcan rendimientos reales superiores a la inflación, permitiendo que el tiempo trabaje a tu favor mientras utilizas esta calculadora para proyectar cuántos meses te tomará reunir el capital necesario según tu capacidad de ahorro mensual y el crecimiento proyectado de tu inversión.',
+    a_en: 'The first step to purchasing a home is securing the down payment amount, which typically ranges from 10% to 20% of the total property value, plus an additional 5% for closing costs and legal fees; when planning this saving, it is vital to separate the capital from your checking account and place it in low-risk instruments that offer real returns above inflation, allowing time to work in your favor while using this calculator to project how many months it will take to gather the necessary capital based on your monthly savings capacity and the projected growth of your investment.',
   },
   {
-    q_es: '¿Cómo planificar el ahorro para la jubilación?',
-    q_en: 'How to plan for retirement savings?',
-    a_es: 'Los expertos recomiendan ahorrar entre el 10-15% del ingreso mensual para la jubilación. Mientras más temprano empieces, menor será el porcentaje necesario gracias al interés compuesto. Un horizonte de 30 años con un 7% de rendimiento puede multiplicar tu capital hasta 7 veces.',
-    a_en: 'Experts recommend saving 10-15% of monthly income for retirement. The earlier you start, the lower the percentage needed thanks to compound interest. A 30-year horizon at 7% return can multiply your capital up to 7 times.',
+    q_es: '¿Cómo planificar correctamente el ahorro para la jubilación?',
+    q_en: 'How to correctly plan for retirement savings?',
+    a_es: 'La planificación del retiro se basa en la tasa de reemplazo, que es el porcentaje de tu sueldo actual que necesitarás para mantener tu estilo de vida en el futuro, recomendándose ahorrar sistemáticamente entre el 10% y el 15% de tus ingresos netos desde una edad temprana; la gran ventaja del ahorro previsional es el horizonte de largo plazo, donde el interés compuesto tiene su máximo impacto, logrando que aportaciones moderadas en la juventud se transformen en fondos sustanciales al final de la vida laboral, por lo cual usar esta calculadora te ayudará a visualizar si tu ritmo actual de ahorro es suficiente o si necesitas ajustar tu portafolio hacia instrumentos con mayores rendimientos para asegurar un retiro digno.',
+    a_en: 'Retirement planning is based on the replacement rate, which is the percentage of your current salary that you will need to maintain your lifestyle in the future, recommending systematically saving between 10% and 15% of your net income starting from an early age; the great advantage of pension savings is the long-term horizon, where compound interest has its maximum impact, ensuring that moderate contributions in youth transform into substantial funds at the end of your working life, which is why using this calculator will help you visualize if your current savings rate is sufficient or if you need to adjust your portfolio toward instruments with higher returns to ensure a dignified retirement.',
   },
   {
-    q_es: '¿Qué rendimiento anual puedo esperar de mis ahorros?',
-    q_en: 'What annual return can I expect from my savings?',
-    a_es: 'Depende del instrumento: una cuenta de ahorros tradicional rinde 1-3%, un CDT o depósito a término 4-8%, un fondo indexado de acciones históricamente 7-10% anual. A mayor rendimiento, mayor riesgo.',
-    a_en: 'It depends on the instrument: a traditional savings account yields 1-3%, a term deposit 4-8%, an index stock fund historically 7-10% annually. Higher return means higher risk.',
+    q_es: '¿Qué rendimiento anual puedo esperar realmente de mis ahorros?',
+    q_en: 'What annual return can I actually expect from my savings?',
+    a_es: 'El rendimiento de tus ahorros está intrínsecamente ligado al riesgo que estés dispuesto a asumir: mientras que las cuentas de ahorro tradicionales y depósitos a término (CDT) ofrecen seguridad pero retornos bajos que apenas cubren la inflación (1-5%), los fondos indexados y las acciones históricamente han entregado rendimientos del 7% al 10% anual a largo plazo, asumiendo una mayor volatilidad; entender esta relación riesgo-beneficio es clave al usar nuestra calculadora, ya que te permite simular escenarios conservadores, moderados o agresivos para entender cómo la elección del instrumento financiero puede acortar años de trabajo o multiplicar exponencialmente tu patrimonio final.',
+    a_en: 'The return on your savings is intrinsically linked to the risk you are willing to take: while traditional savings accounts and certificates of deposit (CD) offer security but low returns that barely cover inflation (1-5%), index funds and stocks have historically delivered returns of 7% to 10% annually over the long term, assuming greater volatility; understanding this risk-reward relationship is key when using our calculator, as it allows you to simulate conservative, moderate, or aggressive scenarios to understand how the choice of financial instrument can shorten years of work or exponentially multiply your final wealth.',
+  },
+  {
+    q_es: '¿Qué es un fondo de emergencia y cuánto dinero debería tener ahorrado?',
+    q_en: 'What is an emergency fund and how much money should I have saved?',
+    a_es: 'Un fondo de emergencia es un colchón financiero destinado exclusivamente a cubrir imprevistos como gastos médicos, reparaciones urgentes o la pérdida del empleo, y su objetivo es evitar que tengas que recurrir a deudas con intereses altos en momentos de crisis; la mayoría de los asesores financieros recomiendan que este fondo cubra entre tres y seis meses de tus gastos fijos mensuales, por lo que utilizar esta calculadora te permitirá establecer una meta clara y un plan de ahorro progresivo para construir esta red de seguridad sin comprometer tu presupuesto diario, garantizando que tu estabilidad financiera no se vea afectada ante cualquier eventualidad externa.',
+    a_en: 'An emergency fund is a financial cushion strictly intended to cover unforeseen events such as medical expenses, urgent repairs, or job loss, and its goal is to prevent you from having to resort to high-interest debt in times of crisis; most financial advisors recommend that this fund cover between three and six months of your fixed monthly expenses, so using this calculator will allow you to set a clear goal and a progressive savings plan to build this safety net without compromising your daily budget, ensuring that your financial stability is not affected by any external eventuality.',
+  },
+  {
+    q_es: '¿Cómo afecta la inflación a mis ahorros y cómo puedo protegerme?',
+    q_en: 'How does inflation affect my savings and how can I protect myself?',
+    a_es: 'La inflación es el aumento sostenido de los precios que erosiona el poder adquisitivo de tu dinero con el tiempo, lo que significa que una cantidad ahorrada hoy comprará menos bienes en el futuro; para protegerte, es crucial que tus ahorros se coloquen en instrumentos que ofrezcan una tasa de rendimiento superior a la inflación proyectada, convirtiendo el ahorro estático en inversión activa, y al utilizar nuestra calculadora, puedes ajustar la tasa de rendimiento esperada para visualizar cómo el crecimiento exponencial del interés compuesto puede no solo preservar el valor de tu capital, sino incrementarlo significativamente en términos reales a pesar del entorno inflacionario.',
+    a_en: 'Inflation is the sustained increase in prices that erodes the purchasing power of your money over time, meaning that an amount saved today will buy fewer goods in the future; to protect yourself, it is crucial that your savings are placed in instruments that offer a rate of return higher than projected inflation, turning static savings into active investment, and by using our calculator, you can adjust the expected rate of return to visualize how the exponential growth of compound interest can not only preserve the value of your capital but significantly increase it in real terms despite the inflationary environment.',
   },
 ];
 
@@ -181,7 +193,7 @@ export function CalculadoraAhorro() {
         <SEO title={title} description={description} type="SoftwareApplication" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schemaJsonLd }} />
 
-        <article className="max-w-3xl mx-auto px-4 sm:px-6" itemScope itemType="https://schema.org/SoftwareApplication">
+        <article className="max-w-3xl mx-auto py-6 px-4 sm:px-6" itemScope itemType="https://schema.org/SoftwareApplication">
           <Breadcrumb
             items={[
               { label: language === 'es' ? 'Inicio' : 'Home', href: '/' },
